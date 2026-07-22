@@ -353,6 +353,21 @@
     height: 380px;
   }
 
+  .carousel-caption {
+    bottom: 1rem !important;
+    left: 1rem !important;
+    right: 1rem !important;
+    padding: 1rem !important;
+  }
+
+  .carousel-caption h2 {
+    font-size: 1.4rem;
+  }
+
+  .carousel-caption p:last-child {
+    font-size: 0.95rem;
+  }
+
   .hero-card {
     min-height: auto;
   }

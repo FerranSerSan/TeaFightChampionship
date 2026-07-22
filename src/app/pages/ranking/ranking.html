@@ -169,6 +169,10 @@
           {{ entry.score }}
         </strong>
 
+        <button type="button" class="breakdown-button" (click)="openBreakdown(entry)">
+          Ver desglose
+        </button>
+
       </div>
 
 
@@ -176,6 +180,63 @@
 
   </section>
 
+  <div *ngIf="selectedEntry" class="breakdown-modal-backdrop" (click)="closeBreakdown()">
+    <div class="breakdown-modal" (click)="$event.stopPropagation()">
+      <div class="breakdown-modal-header">
+        <div>
+          <p class="breakdown-label">Desglose de puntuación</p>
+          <h3>{{ selectedEntry.fighter.name }}</h3>
+          <span>{{ selectedEntry.fighter.nickname || 'Sin apodo' }}</span>
+        </div>
+        <button type="button" class="breakdown-close" (click)="closeBreakdown()" aria-label="Cerrar">
+          ×
+        </button>
+      </div>
+      <div class="breakdown-items">
+        <div class="breakdown-fight" *ngFor="let fightBreak of selectedEntry.breakdown">
+          <div class="breakdown-fight-header">
+            <span>{{ fightBreak.fightLabel }}</span>
+          </div>
+          <div class="breakdown-fight-list">
+            <div class="breakdown-item" *ngFor="let item of fightBreak.items">
+              <span>{{ item.label }}</span>
+              <strong>{{ item.points > 0 ? '+' + item.points : item.points }}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="breakdown-total">
+        <span>Total</span>
+        <strong>{{ selectedEntry.score }}</strong>
+      </div>
+    </div>
+  </div>
+
+  <section class="ranking-explanation">
+    <h2>Cómo se calcula el ranking</h2>
+    <div class="explanation-grid">
+      <article class="explanation-card">
+        <strong>Puntos base</strong>
+        <p>Cada victoria suma más según el método: KO, sumisión o decisión.</p>
+      </article>
+      <article class="explanation-card">
+        <strong>Ganador del campeón</strong>
+        <p>Si derrotas a un campeón, recibes un bono adicional de puntos.</p>
+      </article>
+      <article class="explanation-card">
+        <strong>Volumen de combates</strong>
+        <p>Los luchadores con más batallas que la media ganan un pequeño extra.</p>
+      </article>
+      <article class="explanation-card">
+        <strong>Rachas</strong>
+        <p>Las rachas de victorias también añaden puntos extra al ranking.</p>
+      </article>
+      <article class="explanation-card">
+        <strong>Empates</strong>
+        <p>Los combates inválidos o ilegales se cuentan como empate y aportan puntos menores.</p>
+      </article>
+    </div>
+  </section>
 
   <div
     *ngIf="ranking.length === 0"

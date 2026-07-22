@@ -20,16 +20,19 @@
           </div>
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <img src="/assets/fighters/dani.jpg" class="d-block w-100" alt="Dani Filete" />
-              <div class="carousel-caption d-none d-md-block text-start">
+              <img [src]="champion?.image || '/assets/fighters/dani.png'" class="d-block w-100" [alt]="champion?.name || 'Campeón actual'" />
+              <div class="carousel-caption text-start">
                 <p class="text-uppercase small mb-2 text-danger">Campeón en activo</p>
-                <h2 class="h4 fw-bold mb-2">Dani "Filete"</h2>
-                <p class="small text-muted">Peso ligero, potencia clínica y racha imparable.</p>
+                <h2 class="h4 fw-bold mb-2">
+                  {{ champion?.name || 'Campeón en activo' }}
+                  <span *ngIf="champion?.nickname">"{{ champion?.nickname }}"</span>
+                </h2>
+                <p class="small text-muted">{{ champion ? 'El campeón actual del Tea Fight Championship' : 'Peso ligero, potencia clínica y racha imparable.' }}</p>
               </div>
             </div>
             <div class="carousel-item">
               <div class="d-flex align-items-center justify-content-center bg-black" style="min-height: 420px;">
-                <div class="carousel-caption d-none d-md-block text-start">
+                <div class="carousel-caption text-start">
                   <p class="text-uppercase small mb-2 text-danger">Ranking por puntos</p>
                   <h2 class="h4 fw-bold mb-2">Sistema profesional</h2>
                   <p class="small text-muted">Bonos por victoria, defensa titular y enfrentarse a los mejores.</p>
@@ -38,7 +41,7 @@
             </div>
             <div class="carousel-item">
               <div class="d-flex align-items-center justify-content-center bg-secondary bg-opacity-10" style="min-height: 420px;">
-                <div class="carousel-caption d-none d-md-block text-start">
+                <div class="carousel-caption text-start">
                   <p class="text-uppercase small mb-2 text-danger">Fight Card</p>
                   <h2 class="h4 fw-bold mb-2">Combates con historia</h2>
                   <p class="small text-muted">Métodos, rondas y resultados claros para cada enfrentamiento.</p>

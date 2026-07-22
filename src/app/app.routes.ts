@@ -5,6 +5,7 @@ import { Ranking } from './pages/ranking/ranking';
 import { Fighters } from './pages/fighters/fighters';
 import { Fights } from './pages/fights/fights';
 import { FighterCard } from './shared/fighter-card/fighter-card';
+import { Game } from './pages/game/game';
 
 export const routes: Routes = [
   {
@@ -26,5 +27,9 @@ export const routes: Routes = [
   {
     path: 'fights',
     component: Fights
+  },
+  {
+    path: 'game',
+    component: Game
   }
 ];

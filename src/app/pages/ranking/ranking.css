@@ -488,6 +488,8 @@
   padding-left: 1rem;
 
   border-left: 1px solid rgba(212, 175, 55, 0.25);
+  display: grid;
+  gap: 0.75rem;
 }
 
 .fighter-score strong {
@@ -495,6 +497,182 @@
 
   font-size: 1.8rem;
   font-weight: 900;
+}
+
+.breakdown-button {
+  align-self: start;
+  justify-self: start;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.breakdown-button:hover {
+  background: rgba(212, 175, 55, 0.15);
+  transform: translateY(-1px);
+}
+
+.breakdown-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.55);
+  padding: 1.5rem;
+}
+
+.breakdown-modal {
+  width: min(560px, 100%);
+  background: #0a0907;
+  border: 1px solid rgba(212, 175, 55, 0.18);
+  border-radius: 1.25rem;
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+}
+
+.breakdown-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.75rem 1.75rem 1rem;
+}
+
+.breakdown-label {
+  margin: 0 0 0.35rem;
+  color: #d4af37;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+}
+
+.breakdown-modal-header h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 1.75rem;
+}
+
+.breakdown-modal-header span {
+  color: #aaa08a;
+  font-size: 0.9rem;
+}
+
+.breakdown-close {
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+}
+
+.breakdown-items {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1rem 1.75rem;
+}
+
+.breakdown-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 1rem;
+}
+
+.breakdown-item span {
+  color: #d4af37;
+  font-weight: 700;
+}
+
+.breakdown-item strong {
+  color: #fff;
+  font-weight: 900;
+}
+
+.breakdown-total {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.5rem 1.75rem 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.breakdown-total span {
+  color: #aaa08a;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.8rem;
+}
+
+.breakdown-total strong {
+  color: #d4af37;
+  font-size: 1.6rem;
+  font-weight: 900;
+}
+
+
+/* =========================
+   RANKING EXPLANATION
+========================= */
+
+.ranking-explanation {
+  max-width: 1180px;
+  margin: 3rem auto 0;
+  padding: 2.5rem 1.5rem 3rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(212, 175, 55, 0.16);
+  border-radius: 1rem;
+}
+
+.ranking-explanation h2 {
+  margin: 0 0 1.5rem;
+  color: #fff;
+  font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.explanation-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.explanation-card {
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
+}
+
+.explanation-card strong {
+  display: block;
+  margin-bottom: 0.75rem;
+  color: #d4af37;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.explanation-card p {
+  margin: 0;
+  line-height: 1.8;
+  color: #ccc;
+  font-size: 0.95rem;
 }
 
 
@@ -638,14 +816,29 @@
       45px
       minmax(0, 1fr)
       65px;
+    gap: 0.5rem;
+    padding: 0.8rem 0.8rem;
   }
 
   .fighter-avatar {
     display: none;
   }
 
+  .fighter-info strong {
+    font-size: 1rem;
+  }
+
+  .fighter-info span {
+    font-size: 0.7rem;
+  }
+
   .win-rate strong {
     font-size: 0.9rem;
+  }
+
+  .fighter-streak,
+  .fighter-score {
+    display: none;
   }
 
 }

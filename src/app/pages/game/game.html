@@ -1,0 +1,119 @@
+<div class="game-page">
+  <div class="game-hero">
+    <div class="game-copy">
+      <span class="eyebrow">Tea Fight Championship</span>
+      <h1>Fight Game</h1>
+      <p>Pon a prueba tu reflejo contra un rival aleatorio en un combate de reacción rápida. Elige tu avatar, responde a los ataques y llega lo más lejos posible.</p>
+
+      <div *ngIf="gameState === 'menu'" class="game-actions">
+        <button class="btn btn-primary btn-lg" type="button" (click)="start()">EMPEZAR</button>
+        <a class="btn btn-outline-light btn-lg" routerLink="/">SALIR</a>
+      </div>
+
+      <div *ngIf="gameState === 'fighter-selection'" class="selection-intro">
+        <p>Selecciona tu luchador. El rival se elegirá aleatoriamente y nunca será el mismo.</p>
+      </div>
+
+      <div *ngIf="gameState === 'countdown'" class="countdown-panel">
+        <p>Preparando combate...</p>
+        <div class="countdown-number">{{ countdownLabel }}</div>
+      </div>
+    </div>
+
+    <div class="game-visual">
+      <div class="game-card">
+        <img [src]="decorativeFighter?.image || '/assets/fighters/arnau.png'" [alt]="decorativeFighter?.name" />
+        <div class="game-badge">Modo entrenamiento</div>
+      </div>
+    </div>
+  </div>
+
+  <section *ngIf="gameState === 'fighter-selection'" class="fighter-selection">
+    <h2>Elige tu luchador</h2>
+    <div class="fighter-grid">
+      <button
+        type="button"
+        class="fighter-card"
+        *ngFor="let fighter of fighters"
+        (click)="selectFighter(fighter)"
+      >
+        <img [src]="fighter.image || '/assets/fighters/dani.png'" [alt]="fighter.name" />
+        <strong>{{ fighter.name }}</strong>
+        <span>{{ fighter.nickname || 'Sin apodo' }}</span>
+      </button>
+    </div>
+  </section>
+
+  <section *ngIf="gameState === 'playing'" class="play-section" [class.success]="feedback === 'success'" [class.failure]="feedback === 'failure'">
+    <div class="battle-header">
+      <div class="fighter-block">
+        <img [src]="selectedFighter?.image || '/assets/fighters/dani.png'" [alt]="selectedFighter?.name" />
+        <strong>{{ selectedFighter?.name }}</strong>
+        <span>{{ selectedFighter?.nickname || 'Sin apodo' }}</span>
+      </div>
+
+      <div class="versus-block">
+        <span>VS</span>
+        <div class="round-pill">Ronda {{ round }}</div>
+      </div>
+
+      <div class="fighter-block">
+        <img [src]="enemyFighter?.image || '/assets/fighters/arnau.png'" [alt]="enemyFighter?.name" />
+        <strong>{{ enemyFighter?.name }}</strong>
+        <span>{{ enemyFighter?.nickname || 'Rival' }}</span>
+      </div>
+    </div>
+
+    <div class="arena-card">
+      <div class="arena-status">
+        <span class="status-label">EL RIVAL ATACA</span>
+        <strong class="action-name">{{ enemyActionLabel }}</strong>
+      </div>
+
+      <div class="timer-bar">
+        <span>Tiempo restante</span>
+        <strong>{{ turnRemainingTime.toFixed(1) }}s</strong>
+      </div>
+
+      <div class="response-buttons">
+        <button
+          type="button"
+          class="btn btn-outline-light btn-lg"
+          *ngFor="let option of responseOptions"
+          [disabled]="!turnActive"
+          (click)="submitResponse(option.value)"
+        >
+          {{ option.label }}
+        </button>
+      </div>
+
+      <div class="score-row">
+        <span>Puntuación</span>
+        <strong>{{ score }}</strong>
+      </div>
+    </div>
+  </section>
+
+  <section *ngIf="gameState === 'game-over'" class="game-over-section">
+    <div class="game-over-card">
+      <p class="over-label">COMBATE TERMINADO</p>
+      <h2>DERROTA</h2>
+      <p class="over-subtitle">{{ selectedFighter?.name || 'Jugador' }} vs {{ enemyFighter?.name || 'Rival' }}</p>
+
+      <div class="result-row">
+        <span>Rondas superadas</span>
+        <strong>{{ roundsSurvived }}</strong>
+      </div>
+
+      <div class="result-row">
+        <span>Puntuación</span>
+        <strong>{{ score }}</strong>
+      </div>
+
+      <div class="result-actions">
+        <button type="button" class="btn btn-primary btn-lg" (click)="playAgain()">Volver a jugar</button>
+        <button type="button" class="btn btn-outline-light btn-lg" (click)="backToMenu()">Volver al menú</button>
+      </div>
+    </div>
+  </section>
+</div>

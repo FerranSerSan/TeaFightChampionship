@@ -10,9 +10,19 @@ import { FightService, RankingEntry } from '../../core/services/fight.service';
   styleUrls: ['./ranking.css'],
 })
 export class Ranking {
+  selectedEntry?: RankingEntry;
+
   constructor(private fightService: FightService) {}
 
   get ranking(): RankingEntry[] {
     return this.fightService.getRanking();
+  }
+
+  openBreakdown(entry: RankingEntry): void {
+    this.selectedEntry = entry;
+  }
+
+  closeBreakdown(): void {
+    this.selectedEntry = undefined;
   }
 }

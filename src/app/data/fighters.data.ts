@@ -32,7 +32,7 @@ export const FIGHTERS: Fighter[] = [
   {
     id: 'f4',
     name: 'Aitor',
-    nickname: null,
+    nickname: 'El tostas',
     age: 15,
     height: 1.89,
     weight: 79,
@@ -41,7 +41,7 @@ export const FIGHTERS: Fighter[] = [
   {
     id: 'f5',
     name: 'Jose',
-    nickname: null,
+    nickname: 'Titan retirado',
     age: 18,
     height: 1.82,
     weight: 77,
