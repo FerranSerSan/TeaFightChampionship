@@ -1,0 +1,167 @@
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at top left, rgba(226, 80, 65, 0.07), transparent 18%),
+    radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.04), transparent 20%),
+    linear-gradient(180deg, #030303 0%, #090909 100%);
+  color: #efefef;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.04), transparent 22%),
+    radial-gradient(circle at 82% 18%, rgba(226, 80, 65, 0.06), transparent 20%),
+    radial-gradient(circle at 50% 68%, rgba(255, 255, 255, 0.03), transparent 16%);
+  pointer-events: none;
+  z-index: -1;
+  animation: drift 22s ease-in-out infinite;
+}
+
+@keyframes drift {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(12px, -16px) scale(1.02);
+  }
+}
+
+main {
+  min-height: calc(100vh - 76px);
+}
+
+.navbar {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(4, 4, 4, 0.95) !important;
+  backdrop-filter: blur(12px);
+}
+
+.navbar-brand {
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 1.05rem;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.navbar-dark .navbar-nav .nav-link.active,
+.navbar-dark .navbar-nav .nav-link:hover {
+  color: #ffffff;
+}
+
+.hero-card,
+.card,
+.table {
+  background: rgba(12, 12, 12, 0.96);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.hero-card {
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.card,
+.hero-card {
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover,
+.hero-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 35px 95px rgba(0, 0, 0, 0.42);
+}
+
+.btn-primary {
+  background-color: #e63946;
+  border-color: #e63946;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #d62839;
+  border-color: #d62839;
+}
+
+.btn-outline-light {
+  color: #f4f4f4;
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.btn-outline-light:hover {
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+.badge-mma {
+  background: rgba(230, 57, 70, 0.16);
+  color: #f8f8f8;
+  border: 1px solid rgba(230, 57, 70, 0.23);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+.fighter-img,
+.fight-img,
+.carousel-item img {
+  object-fit: cover;
+  width: 100%;
+  min-height: 280px;
+}
+
+.fighter-card-header {
+  background: linear-gradient(180deg, rgba(226, 80, 65, 0.16), transparent);
+}
+
+.table thead th {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.table tbody tr:hover {
+  background-color: rgba(230, 57, 70, 0.08);
+}
+
+.carousel-caption {
+  background: rgba(2, 2, 2, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1.75rem;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1);
+}
+
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at center, rgba(226, 80, 65, 0.18), transparent 34%);
+  opacity: 0.8;
+}
+
+.section-headline {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.text-danger strong,
+.text-danger {
+  color: #e63946 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  .card,
+  .hero-card {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -1,0 +1,66 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+      <div *ngIf="fighter; else notFound" class="card border-0 shadow-lg overflow-hidden">
+        <div class="row g-0">
+          <div class="col-md-5">
+            <img
+              class="img-fluid fighter-img"
+              [src]="fighter.image || 'https://via.placeholder.com/800x400?text=Sin+imagen'"
+              [alt]="fighter.name"
+            />
+          </div>
+          <div class="col-md-7">
+            <div class="card-body fighter-card-header">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <div>
+                  <h1 class="h4 mb-1">{{ fighter.name }}</h1>
+                  <p class="text-muted mb-0">{{ fighter.nickname || 'Sin apodo' }}</p>
+                </div>
+                <span class="badge badge-champion">{{ fighter.champion ? 'Campeón' : 'Contender' }}</span>
+              </div>
+              <div class="row gx-2 gy-3">
+                <div class="col-6">
+                  <p class="text-muted small mb-1">Edad</p>
+                  <p class="fw-semibold mb-0">{{ fighter.age }} años</p>
+                </div>
+                <div class="col-6">
+                  <p class="text-muted small mb-1">Altura</p>
+                  <p class="fw-semibold mb-0">{{ fighter.height }} m</p>
+                </div>
+                <div class="col-6">
+                  <p class="text-muted small mb-1">Peso</p>
+                  <p class="fw-semibold mb-0">{{ fighter.weight }} kg</p>
+                </div>
+                <div class="col-6">
+                  <p class="text-muted small mb-1">Combates</p>
+                  <p class="fw-semibold mb-0">{{ totalFights }}</p>
+                </div>
+                <div class="col-6">
+                  <p class="text-muted small mb-1">Victorias</p>
+                  <p class="fw-semibold mb-0">{{ wins }}</p>
+                </div>
+                <div class="col-6">
+                  <p class="text-muted small mb-1">Derrotas</p>
+                  <p class="fw-semibold mb-0">{{ losses }}</p>
+                </div>
+                <div class="col-12">
+                  <p class="text-muted small mb-1">Win rate</p>
+                  <p class="fw-semibold mb-0">{{ winRate }}%</p>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer bg-transparent border-top border-white border-opacity-10 text-end">
+              <a class="btn btn-outline-light" routerLink="/fighters">Volver a luchadores</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #notFound>
+        <div class="alert alert-warning">Luchador no encontrado.</div>
+        <a class="btn btn-primary" routerLink="/fighters">Volver a luchadores</a>
+      </ng-template>
+    </div>
+  </div>
+</div>

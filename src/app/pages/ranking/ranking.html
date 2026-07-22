@@ -1,0 +1,48 @@
+<div class="container py-5">
+  <div class="d-flex flex-column flex-md-row align-items-start justify-content-between mb-4 gap-3">
+    <div>
+      <p class="badge bg-danger rounded-pill px-3 py-2 mb-3">Ranking Oficial</p>
+      <h1 class="display-6 fw-bold mb-2">Ranking de Luchadores</h1>
+      <p class="text-muted mb-0">Ordenado por puntuación total en función de resultados, bonificaciones y rachas.</p>
+    </div>
+    <div class="text-end text-muted d-none d-md-block">
+      <p class="mb-0">Clasificación actualizada automáticamente</p>
+    </div>
+  </div>
+
+  <div class="table-responsive shadow-sm rounded-4 overflow-hidden border border-white border-opacity-10">
+    <table class="table table-dark table-borderless align-middle mb-0">
+      <thead class="text-uppercase text-muted small bg-black bg-opacity-25">
+        <tr>
+          <th>#</th>
+          <th>Luchador</th>
+          <th>Victorias</th>
+          <th>Derrotas</th>
+          <th>Empates</th>
+          <th>Racha</th>
+          <th>Win rate</th>
+          <th>Puntos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let entry of ranking; index as i">
+          <td>{{ i + 1 }}</td>
+          <td>
+            <strong>{{ entry.fighter.name }}</strong>
+            <div class="text-muted small">{{ entry.fighter.nickname || 'Sin apodo' }}</div>
+          </td>
+          <td>{{ entry.wins }}</td>
+          <td>{{ entry.losses }}</td>
+          <td>{{ entry.draws }}</td>
+          <td>
+            <span *ngIf="entry.streak > 0" class="text-success">+{{ entry.streak }} victorias</span>
+            <span *ngIf="entry.streak < 0" class="text-danger">{{ entry.streak }} derrotas</span>
+            <span *ngIf="entry.streak === 0">Sin racha</span>
+          </td>
+          <td>{{ entry.winRate }}%</td>
+          <td>{{ entry.score }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
