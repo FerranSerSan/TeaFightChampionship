@@ -1,0 +1,651 @@
+:host {
+  display: block;
+}
+
+
+/* =========================
+   PAGE
+========================= */
+
+.ranking-page {
+  min-height: calc(100vh - 70px);
+
+  padding: 4rem 1.5rem 5rem;
+
+  background:
+    radial-gradient(
+      circle at 80% 0%,
+      rgba(212, 175, 55, 0.1),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      #050200 0%,
+      #090705 55%,
+      #030201 100%
+    );
+
+  color: #fff;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.ranking-header {
+  max-width: 1180px;
+
+  margin: 0 auto 3.5rem;
+
+  display: flex;
+
+  justify-content: space-between;
+  align-items: flex-end;
+
+  gap: 2rem;
+}
+
+.ranking-kicker {
+  display: flex;
+
+  align-items: center;
+
+  gap: 0.8rem;
+
+  margin-bottom: 1rem;
+
+  color: #d4af37;
+
+  font-size: 0.75rem;
+  font-weight: 800;
+
+  letter-spacing: 0.22em;
+
+  text-transform: uppercase;
+}
+
+.ranking-kicker span {
+  width: 40px;
+  height: 2px;
+
+  background: #c72c32;
+}
+
+.ranking-heading h1 {
+  margin: 0;
+
+  font-size: clamp(3rem, 7vw, 6rem);
+
+  font-weight: 900;
+
+  line-height: 0.88;
+
+  letter-spacing: -0.07em;
+
+  text-transform: uppercase;
+}
+
+.ranking-heading h1 strong {
+  display: block;
+
+  color: #d4af37;
+}
+
+.ranking-heading p {
+  max-width: 600px;
+
+  margin: 1.5rem 0 0;
+
+  color: #aaa08a;
+
+  line-height: 1.7;
+}
+
+
+/* =========================
+   UPDATE
+========================= */
+
+.ranking-update {
+  display: flex;
+
+  align-items: center;
+
+  gap: 0.8rem;
+
+  padding-bottom: 0.5rem;
+
+  color: #aaa08a;
+}
+
+.update-dot {
+  width: 9px;
+  height: 9px;
+
+  border-radius: 50%;
+
+  background: #4caf50;
+
+  box-shadow:
+    0 0 0 5px rgba(76, 175, 80, 0.1);
+
+  animation: status-pulse 2s infinite;
+}
+
+.ranking-update small,
+.ranking-update strong {
+  display: block;
+}
+
+.ranking-update small {
+  margin-bottom: 0.25rem;
+
+  color: #777;
+
+  font-size: 0.65rem;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+}
+
+.ranking-update strong {
+  color: #ddd;
+
+  font-size: 0.8rem;
+}
+
+
+/* =========================
+   RANKING LIST
+========================= */
+
+.ranking-list {
+  max-width: 1180px;
+
+  margin: 0 auto;
+
+  border-top: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+
+/* =========================
+   ROW
+========================= */
+
+.ranking-row {
+  position: relative;
+
+  display: grid;
+
+  grid-template-columns:
+    90px
+    minmax(260px, 1fr)
+    190px
+    100px
+    120px
+    120px;
+
+  align-items: center;
+
+  min-height: 115px;
+
+  gap: 1.5rem;
+
+  padding: 1rem 1.5rem;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  background: rgba(255, 255, 255, 0.015);
+
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.ranking-row:hover {
+  z-index: 2;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(212, 175, 55, 0.1),
+      rgba(255, 255, 255, 0.02)
+    );
+
+  border-color: rgba(212, 175, 55, 0.35);
+
+  transform: translateX(8px);
+}
+
+
+/* =========================
+   POSITION
+========================= */
+
+.ranking-position {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 0.25rem;
+}
+
+.position-number {
+  color: rgba(255, 255, 255, 0.4);
+
+  font-size: 2.4rem;
+
+  font-weight: 900;
+
+  line-height: 1;
+}
+
+.position-label {
+  color: #d4af37;
+
+  font-size: 0.55rem;
+  font-weight: 800;
+
+  letter-spacing: 0.16em;
+}
+
+
+/* =========================
+   TOP THREE
+========================= */
+
+.top-one {
+  min-height: 155px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(212, 175, 55, 0.16),
+      rgba(212, 175, 55, 0.025)
+    );
+
+  border-top: 1px solid rgba(212, 175, 55, 0.35);
+}
+
+.top-one .position-number {
+  color: #d4af37;
+
+  font-size: 4rem;
+}
+
+.top-two .position-number {
+  color: #aaa;
+
+  font-size: 3rem;
+}
+
+.top-three .position-number {
+  color: #a96d42;
+
+  font-size: 3rem;
+}
+
+
+/* =========================
+   FIGHTER
+========================= */
+
+.ranking-fighter {
+  display: flex;
+
+  align-items: center;
+
+  gap: 1rem;
+
+  min-width: 0;
+}
+
+.fighter-avatar {
+  flex: 0 0 70px;
+
+  width: 70px;
+  height: 70px;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      #272018,
+      #0d0906
+    );
+
+  border: 1px solid rgba(212, 175, 55, 0.25);
+
+  clip-path: polygon(
+    12% 0,
+    100% 0,
+    100% 88%,
+    88% 100%,
+    0 100%,
+    0 12%
+  );
+}
+
+.fighter-avatar img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform 0.4s ease;
+}
+
+.ranking-row:hover .fighter-avatar img {
+  transform: scale(1.1);
+}
+
+.fighter-avatar span {
+  display: grid;
+
+  place-items: center;
+
+  width: 100%;
+  height: 100%;
+
+  color: #d4af37;
+
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+
+.fighter-info {
+  min-width: 0;
+}
+
+.fighter-info strong {
+  display: block;
+
+  overflow: hidden;
+
+  color: #fff;
+
+  font-size: 1.35rem;
+  font-weight: 900;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  text-transform: uppercase;
+}
+
+.fighter-info span {
+  display: block;
+
+  margin-top: 0.25rem;
+
+  overflow: hidden;
+
+  color: #a99d7d;
+
+  font-size: 0.8rem;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+
+/* =========================
+   RECORD
+========================= */
+
+.fighter-record {
+  display: flex;
+
+  gap: 1.5rem;
+}
+
+.record-item {
+  display: flex;
+
+  align-items: baseline;
+
+  gap: 0.3rem;
+}
+
+.record-item strong {
+  font-size: 1.4rem;
+  font-weight: 900;
+}
+
+.record-item span {
+  font-size: 0.65rem;
+  font-weight: 800;
+}
+
+.wins strong,
+.wins span {
+  color: #62c477;
+}
+
+.losses strong,
+.losses span {
+  color: #d85a5a;
+}
+
+.draws strong,
+.draws span {
+  color: #aaa;
+}
+
+
+/* =========================
+   STREAK
+========================= */
+
+.fighter-streak,
+.win-rate,
+.fighter-score {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 0.35rem;
+}
+
+.fighter-streak span,
+.win-rate span,
+.fighter-score span {
+  color: #777;
+
+  font-size: 0.65rem;
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+}
+
+.fighter-streak strong,
+.win-rate strong {
+  color: #fff;
+
+  font-size: 1.1rem;
+}
+
+.streak-win {
+  color: #62c477 !important;
+}
+
+.streak-loss {
+  color: #d85a5a !important;
+}
+
+
+/* =========================
+   SCORE
+========================= */
+
+.fighter-score {
+  padding-left: 1rem;
+
+  border-left: 1px solid rgba(212, 175, 55, 0.25);
+}
+
+.fighter-score strong {
+  color: #d4af37;
+
+  font-size: 1.8rem;
+  font-weight: 900;
+}
+
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty-ranking {
+  max-width: 700px;
+
+  margin: 4rem auto;
+
+  padding: 3rem;
+
+  border-top: 1px solid rgba(212, 175, 55, 0.3);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+
+  color: #aaa08a;
+
+  text-align: center;
+}
+
+
+/* =========================
+   ANIMATION
+========================= */
+
+@keyframes status-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.45;
+  }
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1000px) {
+
+  .ranking-row {
+    grid-template-columns:
+      70px
+      minmax(220px, 1fr)
+      150px
+      90px
+      100px;
+  }
+
+  .fighter-score {
+    display: none;
+  }
+
+}
+
+
+@media (max-width: 760px) {
+
+  .ranking-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .ranking-update {
+    padding: 0;
+  }
+
+  .ranking-row {
+    grid-template-columns:
+      55px
+      minmax(0, 1fr)
+      80px;
+
+    gap: 0.8rem;
+
+    min-height: 95px;
+
+    padding: 0.8rem;
+  }
+
+  .fighter-record {
+    display: none;
+  }
+
+  .fighter-streak {
+    display: none;
+  }
+
+  .win-rate {
+    align-items: flex-end;
+  }
+
+  .top-one {
+    min-height: 125px;
+  }
+
+  .position-number {
+    font-size: 2rem;
+  }
+
+  .top-one .position-number {
+    font-size: 3rem;
+  }
+
+  .fighter-avatar {
+    flex-basis: 55px;
+
+    width: 55px;
+    height: 55px;
+  }
+
+  .fighter-info strong {
+    font-size: 1rem;
+  }
+
+  .fighter-info span {
+    font-size: 0.7rem;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .ranking-page {
+    padding: 2.5rem 1rem 4rem;
+  }
+
+  .ranking-heading h1 {
+    font-size: 3.5rem;
+  }
+
+  .ranking-row {
+    grid-template-columns:
+      45px
+      minmax(0, 1fr)
+      65px;
+  }
+
+  .fighter-avatar {
+    display: none;
+  }
+
+  .win-rate strong {
+    font-size: 0.9rem;
+  }
+
+}

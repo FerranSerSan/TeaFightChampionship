@@ -1,0 +1,157 @@
+:host {
+  display: block;
+}
+
+.container {
+  max-width: 1240px;
+}
+
+.fighter-card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 620px;
+  background: linear-gradient(180deg, rgba(18, 12, 8, 0.96), rgba(10, 6, 3, 0.98));
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  border-radius: 0.9rem;
+  overflow: hidden;
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.35);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.fighter-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(212, 175, 55, 0.35);
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.42);
+}
+
+.fighter-card-media {
+  position: relative;
+  height: 360px;
+  overflow: hidden;
+  background: radial-gradient(circle at top, rgba(212, 175, 55, 0.1), transparent 40%);
+}
+
+.fighter-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.fighter-card:hover .fighter-card-img {
+  transform: scale(1.08);
+}
+
+.fighter-card-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.65rem 0.9rem;
+  color: #fff;
+  background: rgba(201, 46, 46, 0.95);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 999px;
+}
+
+.fighter-card-body {
+  display: grid;
+  gap: 1.4rem;
+  padding: 1.8rem;
+}
+
+.fighter-card-header h2 {
+  margin: 0;
+  font-size: clamp(2.1rem, 3vw, 2.8rem);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.05;
+}
+
+.fighter-card-header p {
+  margin: 0.5rem 0 0;
+  color: #d4c58c;
+  font-size: 1rem;
+}
+
+.fighter-card-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.fighter-card-meta div {
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(212, 175, 55, 0.12);
+  border-radius: 0.65rem;
+}
+
+.meta-label {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: #b9a76f;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+}
+
+.fighter-card-meta strong {
+  display: block;
+  color: #f8f2d8;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.fighter-card-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem 1.2rem;
+  border-radius: 999px;
+  background: #d4af37;
+  color: #111;
+  text-decoration: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.fighter-card-link:hover {
+  background: #fff1b8;
+  transform: translateY(-2px);
+}
+
+.badge-mma {
+  background: #c72c32;
+  color: #fff;
+}
+
+@media (max-width: 992px) {
+  .fighter-card {
+    min-height: 620px;
+  }
+}
+
+@media (max-width: 680px) {
+  .fighter-card-media {
+    height: 280px;
+  }
+
+  .fighter-card {
+    min-height: 560px;
+  }
+
+  .fighter-card-meta {
+    grid-template-columns: 1fr;
+  }
+}
