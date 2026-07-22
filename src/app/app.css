@@ -165,3 +165,31 @@ main {
     transition: none !important;
   }
 }
+
+.navbar {
+  background-color: var(--tf-surface) !important;
+  border-bottom: 1px solid var(--tf-border);
+}
+
+.navbar-brand {
+  color: var(--tf-text) !important;
+  letter-spacing: 0.5px;
+}
+
+.navbar-brand:hover {
+  color: var(--tf-accent) !important;
+}
+
+.nav-link {
+  color: var(--tf-text-muted) !important;
+  margin-left: 8px;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--tf-accent) !important;
+}
+
+.app-content {
+  min-height: calc(100vh - 72px);
+}

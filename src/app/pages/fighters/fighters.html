@@ -11,26 +11,37 @@
   </div>
 
   <div class="row g-4">
-    <div class="col-12 col-md-6 col-lg-4" *ngFor="let fighter of fighters">
-      <div class="card h-100 border-0 shadow-sm overflow-hidden position-relative">
-        <div class="position-absolute top-0 end-0 m-3 badge badge-mma">{{ fighter.champion ? 'Campeón' : 'Contender' }}</div>
-        <img
-          class="card-img-top fighter-img"
-          [src]="fighter.image || 'https://via.placeholder.com/400x250?text=Sin+imagen'"
-          [alt]="fighter.name"
-        />
-        <div class="card-body">
-          <h2 class="h5 mb-2">{{ fighter.name }}</h2>
-          <p class="text-muted mb-3">{{ fighter.nickname || 'Sin apodo' }}</p>
-          <div class="d-flex gap-3 text-muted small flex-wrap">
-            <span>Edad {{ fighter.age }}</span>
-            <span>{{ fighter.weight }} kg</span>
+    <div class="col-12 col-md-6 col-xl-4" *ngFor="let fighter of fighters">
+      <article class="fighter-card h-100">
+        <div class="fighter-card-media">
+          <img
+            class="fighter-card-img"
+            [src]="fighter.image || 'https://via.placeholder.com/600x400?text=Sin+imagen'"
+            [alt]="fighter.name"
+          />
+          <span class="fighter-card-badge">{{ fighter.champion ? 'Campeón' : 'Contender' }}</span>
+        </div>
+
+        <div class="fighter-card-body">
+          <div class="fighter-card-header">
+            <h2>{{ fighter.name }}</h2>
+            <p>{{ fighter.nickname || 'Sin apodo' }}</p>
           </div>
+
+          <div class="fighter-card-meta">
+            <div>
+              <span class="meta-label">Edad</span>
+              <strong>{{ fighter.age }} años</strong>
+            </div>
+            <div>
+              <span class="meta-label">Peso</span>
+              <strong>{{ fighter.weight }} kg</strong>
+            </div>
+          </div>
+
+          <a class="fighter-card-link" [routerLink]="['/fighters', fighter.id]">Ver ficha</a>
         </div>
-        <div class="card-footer bg-transparent border-top border-white border-opacity-10">
-          <a class="btn btn-primary w-100" [routerLink]="['/fighters', fighter.id]">Ver ficha</a>
-        </div>
-      </div>
+      </article>
     </div>
   </div>
 </div>

@@ -1,39 +1,117 @@
-<div class="container py-5">
-  <div class="d-flex flex-column flex-md-row align-items-start justify-content-between mb-4 gap-3">
-    <div>
-      <p class="badge bg-danger rounded-pill px-3 py-2 mb-3">Fight Card</p>
-      <h1 class="display-6 fw-bold mb-2">Combates</h1>
-      <p class="text-muted mb-0">Resultados recientes con método, ronda y vencedor.</p>
-    </div>
-  </div>
+﻿### No changes, please read file
+<div class="fights-page">
 
-  <div class="row g-4">
-    <div class="col-12 col-md-6 col-lg-4" *ngFor="let fightView of fights">
-      <div class="card h-100 border-0 shadow-sm overflow-hidden">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <div>
-              <h2 class="h6 mb-1">{{ fightView.fighter1?.name || 'Desconocido' }}</h2>
-              <p class="text-muted small mb-0">Competidor</p>
-            </div>
-            <span class="text-danger fw-bold">VS</span>
-            <div class="text-end">
-              <h2 class="h6 mb-1">{{ fightView.fighter2?.name || 'Desconocido' }}</h2>
-              <p class="text-muted small mb-0">Competidor</p>
-            </div>
-          </div>
-          <div class="border-top border-white border-opacity-10 pt-3">
-            <p class="text-muted small mb-1">Ganador</p>
-            <h3 class="h5 mb-3">{{ fightView.winner?.name || 'Desconocido' }}</h3>
-            <p class="mb-1"><strong>Método:</strong> {{ fightView.fight.method }}</p>
-            <p class="mb-3 text-muted">Ronda {{ fightView.fight.round }}</p>
-            <div class="d-flex gap-2 flex-wrap">
-              <span class="badge badge-mma">Evento principal</span>
-              <span class="badge badge-mma">{{ fightView.fight.lugar }}</span>
-            </div>
-          </div>
+  <header class="fights-header">
+    <p class="eyebrow">Fight Card</p>
+    <h1>Combates destacados</h1>
+    <p>Una experiencia visual más cercana a una cartelera MMA premium: nombres grandes, mucha jerarquía y contraste definido.</p>
+  </header>
+
+  <section *ngIf="currentFight" class="fight-slider" aria-label="Carrusel de combates" [attr.data-fight-number]="currentFightNumber">
+    <div class="slider-top">
+      <div class="slider-title">
+        <span class="fight-tag">Fight {{ currentFightNumber }}</span>
+        <h2>Tea Fight Championship</h2>
+      </div>
+      <div class="fight-venue">
+        <span>{{ currentFight.fight.fecha }}</span>
+        <span class="venue-separator">·</span>
+        <span>{{ currentFight.fight.lugar || 'Lugar desconocido' }}</span>
+      </div>
+    </div>
+
+    <article class="fight-card">
+      <div class="fighter-side left-side" [class.winner]="isWinner(currentFight, currentFight.fighter1)">
+        <div class="fighter-meta">
+          <span class="fighter-label">Luchador</span>
+          <h3>{{ currentFight.fighter1?.name || 'Desconocido' }}</h3>
+          <p>{{ currentFight.fighter1?.nickname || 'Sin apodo' }}</p>
+        </div>
+        <div class="fighter-portrait-shell">
+          <div class="fighter-portrait-frame"></div>
+          <ng-container *ngIf="currentFight.fighter1?.image; else fighter1Placeholder">
+            <img class="fighter-portrait" [src]="currentFight.fighter1?.image" [alt]="currentFight.fighter1?.name || 'Luchador'" />
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="fight-center">
+        <span class="fight-versus">VS</span>
+        <div class="fight-stats">
+          <span>{{ currentFight.fight.method || 'Método no disponible' }}</span>
+          <strong>Ronda {{ currentFight.fight.round ?? '-' }}</strong>
+        </div>
+      </div>
+
+      <div class="fighter-side right-side" [class.winner]="isWinner(currentFight, currentFight.fighter2)">
+        <div class="fighter-meta text-right">
+          <span class="fighter-label">Luchador</span>
+          <h3>{{ currentFight.fighter2?.name || 'Desconocido' }}</h3>
+          <p>{{ currentFight.fighter2?.nickname || 'Sin apodo' }}</p>
+        </div>
+        <div class="fighter-portrait-shell">
+          <div class="fighter-portrait-frame"></div>
+          <ng-container *ngIf="currentFight.fighter2?.image; else fighter2Placeholder">
+            <img class="fighter-portrait" [src]="currentFight.fighter2?.image" [alt]="currentFight.fighter2?.name || 'Luchador'" />
+          </ng-container>
+        </div>
+      </div>
+
+      <ng-template #fighter1Placeholder>
+        <div class="fighter-portrait-placeholder">?</div>
+      </ng-template>
+      <ng-template #fighter2Placeholder>
+        <div class="fighter-portrait-placeholder">?</div>
+      </ng-template>
+    </article>
+
+    <div class="fight-result-panel">
+      <div class="result-hero">
+        <span>WINNER</span>
+        <strong>{{ currentFight.winner?.name || 'Sin resultado' }}</strong>
+      </div>
+      <div class="result-breakdown">
+        <div>
+          <span>Método</span>
+          <strong>{{ currentFight.fight.method || 'N/D' }}</strong>
+        </div>
+        <div>
+          <span>Ronda</span>
+          <strong>{{ currentFight.fight.round ?? '-' }}</strong>
+        </div>
+        <div>
+          <span>Lugar</span>
+          <strong>{{ currentFight.fight.lugar || 'N/D' }}</strong>
         </div>
       </div>
     </div>
 
+    <div *ngIf="fightCount > 1" class="slider-actions">
+      <button type="button" class="nav-button" (click)="previousFight()" [disabled]="!hasPrevious" aria-label="Combate anterior">
+        Anterior
+      </button>
+
+      <div class="slider-counter">Combate {{ currentFightNumber }} de {{ fightCount }}</div>
+
+      <button type="button" class="nav-button" (click)="nextFight()" [disabled]="!hasNext" aria-label="Siguiente combate">
+        Siguiente
+      </button>
+    </div>
+
+    <div *ngIf="fightCount > 1" class="slider-dots" aria-label="Seleccionar combate">
+      <button
+        *ngFor="let fight of fights; let index = index"
+        type="button"
+        class="slide-dot"
+        [class.active]="index === currentFightIndex"
+        (click)="goToFight(index)"
+        [attr.aria-label]="'Combate ' + (index + 1) + ' de ' + fightCount"
+        [attr.aria-current]="index === currentFightIndex ? 'true' : null"
+      ></button>
+    </div>
+  </section>
+
+  <div *ngIf="!currentFight" class="empty-state">
+    <p>No hay combates disponibles en este momento.</p>
+  </div>
 </div>

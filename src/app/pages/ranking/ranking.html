@@ -1,48 +1,191 @@
-<div class="container py-5">
-  <div class="d-flex flex-column flex-md-row align-items-start justify-content-between mb-4 gap-3">
-    <div>
-      <p class="badge bg-danger rounded-pill px-3 py-2 mb-3">Ranking Oficial</p>
-      <h1 class="display-6 fw-bold mb-2">Ranking de Luchadores</h1>
-      <p class="text-muted mb-0">Ordenado por puntuación total en función de resultados, bonificaciones y rachas.</p>
+<div class="ranking-page">
+
+  <header class="ranking-header">
+
+    <div class="ranking-heading">
+
+      <div class="ranking-kicker">
+        <span></span>
+        Clasificación oficial
+      </div>
+
+      <h1>
+        Ranking de
+        <strong>luchadores</strong>
+      </h1>
+
+      <p>
+        La clasificación actual de Tea Fight Championship.
+        Cada combate cambia la jerarquía.
+      </p>
+
     </div>
-    <div class="text-end text-muted d-none d-md-block">
-      <p class="mb-0">Clasificación actualizada automáticamente</p>
+
+    <div class="ranking-update">
+
+      <span class="update-dot"></span>
+
+      <div>
+        <small>Estado del ranking</small>
+        <strong>Actualizado automáticamente</strong>
+      </div>
+
     </div>
+
+  </header>
+
+
+  <section class="ranking-list">
+
+    <div
+      *ngFor="let entry of ranking; index as i"
+      class="ranking-row"
+      [class.top-one]="i === 0"
+      [class.top-two]="i === 1"
+      [class.top-three]="i === 2"
+    >
+
+      <!-- POSICIÓN -->
+
+      <div class="ranking-position">
+
+        <span class="position-number">
+          {{ i + 1 }}
+        </span>
+
+        <span
+          *ngIf="i === 0"
+          class="position-label"
+        >
+          CHAMPION
+        </span>
+
+      </div>
+
+
+      <!-- LUCHADOR -->
+
+      <div class="ranking-fighter">
+
+        <div class="fighter-avatar">
+
+          <img
+            *ngIf="entry.fighter.image"
+            [src]="entry.fighter.image"
+            [alt]="entry.fighter.name"
+          />
+
+          <span *ngIf="!entry.fighter.image">
+            ?
+          </span>
+
+        </div>
+
+        <div class="fighter-info">
+
+          <strong>
+            {{ entry.fighter.name }}
+          </strong>
+
+          <span>
+            {{ entry.fighter.nickname || 'Sin apodo' }}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- RECORD -->
+
+      <div class="fighter-record">
+
+        <div class="record-item wins">
+          <strong>{{ entry.wins }}</strong>
+          <span>W</span>
+        </div>
+
+        <div class="record-item losses">
+          <strong>{{ entry.losses }}</strong>
+          <span>L</span>
+        </div>
+
+        <div class="record-item draws">
+          <strong>{{ entry.draws }}</strong>
+          <span>D</span>
+        </div>
+
+      </div>
+
+
+      <!-- STREAK -->
+
+      <div class="fighter-streak">
+
+        <span>Racha</span>
+
+        <strong
+          [class.streak-win]="entry.streak > 0"
+          [class.streak-loss]="entry.streak < 0"
+        >
+
+          <ng-container *ngIf="entry.streak > 0">
+            W{{ entry.streak }}
+          </ng-container>
+
+          <ng-container *ngIf="entry.streak < 0">
+            L{{ -entry.streak }}
+          </ng-container>
+
+          <ng-container *ngIf="entry.streak === 0">
+            -
+          </ng-container>
+
+        </strong>
+
+      </div>
+
+
+      <!-- WIN RATE -->
+
+      <div class="win-rate">
+
+        <span>Win rate</span>
+
+        <strong>
+          {{ entry.winRate }}%
+        </strong>
+
+      </div>
+
+
+      <!-- SCORE -->
+
+      <div class="fighter-score">
+
+        <span>Puntos</span>
+
+        <strong>
+          {{ entry.score }}
+        </strong>
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+
+  <div
+    *ngIf="ranking.length === 0"
+    class="empty-ranking"
+  >
+
+    <p>
+      No hay datos suficientes para crear el ranking.
+    </p>
+
   </div>
 
-  <div class="table-responsive shadow-sm rounded-4 overflow-hidden border border-white border-opacity-10">
-    <table class="table table-dark table-borderless align-middle mb-0">
-      <thead class="text-uppercase text-muted small bg-black bg-opacity-25">
-        <tr>
-          <th>#</th>
-          <th>Luchador</th>
-          <th>Victorias</th>
-          <th>Derrotas</th>
-          <th>Empates</th>
-          <th>Racha</th>
-          <th>Win rate</th>
-          <th>Puntos</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let entry of ranking; index as i">
-          <td>{{ i + 1 }}</td>
-          <td>
-            <strong>{{ entry.fighter.name }}</strong>
-            <div class="text-muted small">{{ entry.fighter.nickname || 'Sin apodo' }}</div>
-          </td>
-          <td>{{ entry.wins }}</td>
-          <td>{{ entry.losses }}</td>
-          <td>{{ entry.draws }}</td>
-          <td>
-            <span *ngIf="entry.streak > 0" class="text-success">+{{ entry.streak }} victorias</span>
-            <span *ngIf="entry.streak < 0" class="text-danger">{{ entry.streak }} derrotas</span>
-            <span *ngIf="entry.streak === 0">Sin racha</span>
-          </td>
-          <td>{{ entry.winRate }}%</td>
-          <td>{{ entry.score }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
 </div>
