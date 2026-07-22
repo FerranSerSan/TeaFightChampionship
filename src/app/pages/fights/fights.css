@@ -760,6 +760,15 @@
   .fight-result-panel {
     grid-template-columns: 1fr;
   }
+
+  .slider-actions {
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .slider-actions .nav-button {
+    min-width: 120px;
+  }
 }
 
 @media (max-width: 680px) {
@@ -791,6 +800,32 @@
 
   .slider-actions {
     flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .slider-actions .nav-button {
+    flex: 1 1 160px;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .slider-actions .slider-counter {
+    order: -1;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .slider-dots {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .slide-dot {
+    width: 40px;
+    height: 10px;
   }
 }
 

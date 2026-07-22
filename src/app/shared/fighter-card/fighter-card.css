@@ -443,4 +443,8 @@ flex-direction: column;
 width: 100%;
 justify-content: center;
 }
+
+.fighter-number {
+display: none;
+}
 }

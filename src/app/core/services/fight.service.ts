@@ -4,6 +4,17 @@ import { Fighter } from '../models/fighter.model';
 import { FIGHTS } from '../../data/fights.data';
 import { FIGHTERS } from '../../data/fighters.data';
 
+export interface BreakdownItem {
+  label: string;
+  points: number;
+}
+
+export interface FightBreakdown {
+  fightId: string;
+  fightLabel: string;
+  items: BreakdownItem[];
+}
+
 export interface RankingEntry {
   fighter: Fighter;
   score: number;
@@ -14,6 +25,7 @@ export interface RankingEntry {
   streak: number;
   winRate: number;
   pointsChange: number;
+  breakdown: FightBreakdown[];
 }
 
 interface FighterStats {
@@ -26,6 +38,7 @@ interface FighterStats {
   streak: number;
   lastResult: 'win' | 'loss' | 'none';
   pointsChange: number;
+  breakdown: Map<string, FightBreakdown>;
 }
 
 @Injectable({
@@ -50,6 +63,15 @@ export class FightService {
 
   getFighter(id: string | null): Fighter | undefined {
     return id ? this.fighters.find((fighter) => fighter.id === id) : undefined;
+  }
+
+  getChampion(): Fighter | undefined {
+    const champion = this.fighters.find((fighter) => fighter.champion);
+    if (champion) {
+      return champion;
+    }
+    const ranking = this.getRanking();
+    return ranking.length ? ranking[0].fighter : undefined;
   }
 
   getTotalFightsByFighter(fighterId: string): number {
@@ -92,6 +114,7 @@ export class FightService {
         streak: 0,
         lastResult: 'none',
         pointsChange: 0,
+        breakdown: new Map<string, FightBreakdown>(),
       });
     });
 
@@ -113,6 +136,22 @@ export class FightService {
         fighter2.score += 5;
         fighter1.pointsChange += 5;
         fighter2.pointsChange += 5;
+
+        this.addBreakdownItem(
+          fighter1,
+          fight,
+          fighter2.fighter.name,
+          `Empate vs ${fighter2.fighter.name}`,
+          5
+        );
+        this.addBreakdownItem(
+          fighter2,
+          fight,
+          fighter1.fighter.name,
+          `Empate vs ${fighter1.fighter.name}`,
+          5
+        );
+
         fighter1.streak = 0;
         fighter2.streak = 0;
         fighter1.lastResult = 'none';
@@ -139,27 +178,59 @@ export class FightService {
       winner.pointsChange += victoryPoints;
       loser.pointsChange += defeatPoints;
 
+      this.addBreakdownItem(
+        winner,
+        fight,
+        loser.fighter.name,
+        `Victoria vs ${loser.fighter.name} por ${fight.method}`,
+        victoryPoints
+      );
+      this.addBreakdownItem(
+        loser,
+        fight,
+        winner.fighter.name,
+        `Derrota vs ${winner.fighter.name} por ${fight.method}`,
+        defeatPoints
+      );
+
       winner.wins += 1;
       loser.losses += 1;
 
       if (loser.fighter.champion) {
-        winner.score += 25;
-        winner.pointsChange += 25;
+        winner.score += 30;
+        winner.pointsChange += 30;
+        this.addBreakdownItem(
+          winner,
+          fight,
+          loser.fighter.name,
+          'Victoria contra campeón',
+          30
+        );
       }
 
       if (currentNumberOneId && loser.fighter.id === currentNumberOneId) {
         winner.score += 15;
         winner.pointsChange += 15;
+        this.addBreakdownItem(
+          winner,
+          fight,
+          loser.fighter.name,
+          'Victoria sobre #1 existente',
+          15
+        );
       }
 
       if (this.isTitleFight(fight)) {
-        if (winner.fighter.champion) {
-          winner.score += 15;
-          winner.pointsChange += 15;
-        } else {
-          winner.score += 20;
-          winner.pointsChange += 20;
-        }
+        const titleBonus = winner.fighter.champion ? 15 : 20;
+        winner.score += titleBonus;
+        winner.pointsChange += titleBonus;
+        this.addBreakdownItem(
+          winner,
+          fight,
+          loser.fighter.name,
+          'Bonus pelea de título',
+          titleBonus
+        );
       }
 
       if (winner.lastResult === 'win') {
@@ -186,6 +257,21 @@ export class FightService {
       }
     }
 
+    const totalFights = Array.from(stats.values()).reduce((sum, fighterStat) => sum + fighterStat.totalFights, 0);
+    const averageFights = totalFights / Math.max(stats.size, 1);
+
+    for (const fighterStat of stats.values()) {
+      if (fighterStat.totalFights > averageFights) {
+        fighterStat.score += 5;
+        fighterStat.pointsChange += 5;
+        this.addBonusBreakdownItem(
+          fighterStat,
+          'Bonus por combates extra',
+          5
+        );
+      }
+    }
+
     return Array.from(stats.values())
       .map((fighterStat) => ({
         fighter: fighterStat.fighter,
@@ -197,6 +283,7 @@ export class FightService {
         streak: fighterStat.streak,
         winRate: this.calculateWinRate(fighterStat),
         pointsChange: fighterStat.pointsChange,
+        breakdown: Array.from(fighterStat.breakdown.values()),
       }))
       .sort((a, b) => {
         if (b.score !== a.score) {
@@ -218,7 +305,14 @@ export class FightService {
 
   private isDraw(fight: Fight): boolean {
     const normalized = this.normalizeMethod(fight.method);
-    return normalized.includes('empate');
+    if (fight.winnerId === 'EMPATE') {
+      return true;
+    }
+    return (
+      normalized.includes('empate') ||
+      normalized.includes('ilegal') ||
+      normalized.includes('illegal')
+    );
   }
 
   private isDQ(fight: Fight): boolean {
@@ -337,5 +431,44 @@ export class FightService {
   private calculateWinRate(fighterStat: FighterStats): number {
     const completed = fighterStat.wins + fighterStat.losses;
     return completed === 0 ? 0 : Math.round((fighterStat.wins / completed) * 100);
+  }
+
+  private getOrCreateBreakdown(
+    fighterStat: FighterStats,
+    fight: Fight,
+    opponentName: string
+  ): FightBreakdown {
+    if (!fighterStat.breakdown.has(fight.id)) {
+      fighterStat.breakdown.set(fight.id, {
+        fightId: fight.id,
+        fightLabel: `Combate vs ${opponentName} (${fight.method || 'método desconocido'})`,
+        items: [],
+      });
+    }
+
+    return fighterStat.breakdown.get(fight.id)!;
+  }
+
+  private addBreakdownItem(
+    fighterStat: FighterStats,
+    fight: Fight,
+    opponentName: string,
+    label: string,
+    points: number
+  ): void {
+    const breakdown = this.getOrCreateBreakdown(fighterStat, fight, opponentName);
+    breakdown.items.push({ label, points });
+  }
+
+  private addBonusBreakdownItem(fighterStat: FighterStats, label: string, points: number): void {
+    const fightId = 'bonus';
+    if (!fighterStat.breakdown.has(fightId)) {
+      fighterStat.breakdown.set(fightId, {
+        fightId,
+        fightLabel: 'Bonos adicionales',
+        items: [],
+      });
+    }
+    fighterStat.breakdown.get(fightId)!.items.push({ label, points });
   }
 }
